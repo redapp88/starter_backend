@@ -1,8 +1,10 @@
 package starter.letapp.net.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,8 +12,8 @@ import org.springframework.stereotype.Service;
 import starter.letapp.net.dao.AppRoleRepository;
 import starter.letapp.net.dao.AppUserRepository;
 import starter.letapp.net.entities.AppUser;
-import starter.letapp.net.entities.PasswordRequest;
 import starter.letapp.net.entities.Profile;
+import starter.letapp.net.technicals.PasswordRequest;
 import starter.letapp.net.technicals.UserRequest;
 @Service
 public class UsersServiceImp implements UsersService {
@@ -20,17 +22,30 @@ public class UsersServiceImp implements UsersService {
 	@Autowired
 	private AppRoleRepository appRoleRepository;
 	@Autowired
+	private ProfilesService profilesService;
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	public List<AppUser> getUsers(String keyword,String contry,String city, List<Profile> profiles, String state) {
-
+	public List<AppUser> getUsers(String keyword,String city, List<Profile> profiles, String state) {
+		System.out.println("profiles selectioné"+profiles);
 		keyword = "%" + keyword + "%";
 		if (state.equals("*"))
 			state = "%%";
 		if (city.equals("*"))
 			city="%%";
-		return this.appUserRepository.getUsersByDetails(keyword,contry, city, profiles, state, "USER");
+		List<AppUser> result = this.appUserRepository.getUsersByDetails(keyword, city, state, "USER");
+		List<AppUser> response=new ArrayList<AppUser>();
+		result.forEach(
+			user->{
+				System.out.println("profiles de l 'utlisateur"+user.getProfiles());
+			if(ListUtils.intersection(profiles, user.getProfiles()).size()>0) {
+				System.out.println("Intersection"+ListUtils.intersection(profiles, user.getProfiles()));
+				response.add(user);
+			}
+		});
+		
+		return response;
 
 	}
 
@@ -41,8 +56,7 @@ public class UsersServiceImp implements UsersService {
 
 		AppUser user = new AppUser(userRequest.getUsername(),
 				this.bCryptPasswordEncoder.encode(userRequest.getPassword()), userRequest.getName(), null,
-				userRequest.getMail(), userRequest.getDescription(), userRequest.getPhone(),
-				userRequest.getContry(),userRequest.getCity());
+				userRequest.getMail(), userRequest.getDescription(), userRequest.getPhone(),userRequest.getCity());
 		user.setAppRole(this.appRoleRepository.findByRoleName("USER"));
 		return this.appUserRepository.save(user);
 	}
@@ -52,10 +66,9 @@ public class UsersServiceImp implements UsersService {
 		AppUser user = this.getUser(username);
 		user.setName(userRequest.getName());
 		user.setDescription(userRequest.getDescription());
-		user.setImage(userRequest.getImage());
+		user.setImage(null);
 		user.setCity(userRequest.getCity());
 		user.setPhone(userRequest.getPassword());
-		user.setState(userRequest.getState());
 		user.setMail(userRequest.getMail());
 		user.setProfiles(userRequest.getProfiles());
 		return this.appUserRepository.save(user);
@@ -98,6 +111,11 @@ public class UsersServiceImp implements UsersService {
 	public String confirmeResetPassword(Long id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public AppUser save(AppUser user) {
+		return this.appUserRepository.save(user);
 	}
 
 }

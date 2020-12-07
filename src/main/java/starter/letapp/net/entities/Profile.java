@@ -1,5 +1,6 @@
 package starter.letapp.net.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import lombok.NonNull;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class Profile {
+public class Profile implements Serializable {
 @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 private Long id;
 @NonNull

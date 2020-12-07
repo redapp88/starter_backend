@@ -1,5 +1,6 @@
 package starter.letapp.net.technicals;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import starter.letapp.net.entities.Interest;
 import starter.letapp.net.entities.Profile;
 import starter.letapp.net.entities.Project;
 
@@ -23,13 +25,10 @@ public class UserRequest {
 	private String username;
 	private String password;
 	private String name;
-	private byte[] image;
 	private String mail;
 	private String description;
-	private String contry;
 	private String phone;
 	private String city;
-	private String state;
 	private List<Project> projects;
 	private List<Profile> profiles;
 }

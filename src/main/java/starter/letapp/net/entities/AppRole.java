@@ -1,5 +1,7 @@
 package starter.letapp.net.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class AppRole {
+public class AppRole  implements Serializable{
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 Long id;

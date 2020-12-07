@@ -37,8 +37,8 @@ private UsersService usersService;
 	    		appUser.getPassword(),
 	    		appUser.getName(),
 	    		appUser.getImage(),
-	    		appUser.getContry(),
 	    		appUser.getCity(),
+	    		appUser.getProfiles(),
 	    		authorities);
 		return user;
 	}

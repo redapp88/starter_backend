@@ -1,5 +1,6 @@
 package starter.letapp.net.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,11 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 @Entity
 @Data
-public class Interest {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Interest implements Serializable {
 	@Id
 	private String id;
 	@NonNull

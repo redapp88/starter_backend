@@ -14,7 +14,6 @@ public class ProjectRequest {
 	public String username;
 	private String title;
 	private String description;
-	private String contry;
 	private String city;
 	private String categorie;
 	private List<Profile> profiles;

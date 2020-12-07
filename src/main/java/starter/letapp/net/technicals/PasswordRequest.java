@@ -1,4 +1,4 @@
-package starter.letapp.net.entities;
+package starter.letapp.net.technicals;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

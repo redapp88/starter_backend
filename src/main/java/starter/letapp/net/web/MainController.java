@@ -20,6 +20,7 @@ import starter.letapp.net.services.ProfilesService;
 import starter.letapp.net.services.ProjectsService;
 import starter.letapp.net.services.UsersService;
 import starter.letapp.net.technicals.InterestRequest;
+import starter.letapp.net.technicals.ProfileRequest;
 import starter.letapp.net.technicals.ProjectRequest;
 import starter.letapp.net.technicals.UserRequest;
 
@@ -36,11 +37,11 @@ public class MainController {
 	private InterestsService interestsService;
 
 // ************* project function ***************
-	@GetMapping("/projects")
+	@GetMapping("public/project/projects")
 	public List<Project> projects(@RequestParam String username, @RequestParam String categorie,
-			@RequestParam String contry, @RequestParam String city, @RequestParam String keyword,
-			@RequestParam String state) {
-		return this.projectsService.getProjects(username, contry, city, categorie, keyword, state);
+			@RequestParam String city, @RequestParam String keyword,
+			@RequestParam String state,@RequestParam (defaultValue = "false")boolean compatibles,@RequestParam (defaultValue = "*")String searcher) {
+		return this.projectsService.getProjects(username, city, categorie, keyword, state,compatibles,searcher);
 	}
 
 	@GetMapping("public/project")
@@ -65,30 +66,36 @@ public class MainController {
 
 	// ************** user functions *************
 
-	@GetMapping("public/users")
-	public List<AppUser> users(@RequestParam String keyword, @RequestParam String contry, @RequestParam String city,
-			@RequestParam String state, @RequestParam List<Profile> profiles) {
-		return this.UsersService.getUsers(keyword,contry, city, profiles, state);
+	@PutMapping("user/users")
+	public List<AppUser> users(@RequestParam String keyword, @RequestParam String city,
+			@RequestParam String state, @RequestBody List<Profile> profiles) {
+		//System.out.println(profiles.length);
+		//return null;
+		return this.UsersService.getUsers(keyword, city, profiles, state);
 	}
 
-	@GetMapping("public/user")
+	@GetMapping("user/user")
 	public AppUser user(@RequestParam String username) {
 		return this.UsersService.getUser(username);
 	}
 
-	@PostMapping("user/addUser")
+	@PostMapping("public/user/add")
 	public AppUser addUser(@RequestBody UserRequest userRequest) {
 		return this.UsersService.addUser(userRequest);
 	}
 
-	@PutMapping("user/editUser")
+	@PutMapping("user/user/edit")
 	public AppUser editUser(@RequestParam String username, @RequestBody UserRequest userRequest) {
 		return this.UsersService.editUser(username, userRequest);
+	}
+	@PutMapping("user/user/editPassword")
+	public AppUser editPassword(@RequestParam String username, @RequestBody UserRequest userRequest) {
+		return null;
 	}
 
 	// ******** interests function ****************
 	@GetMapping("user/interest/interests")
-	public List<Interest> interests(@RequestParam String username, @RequestParam Long id) {
+	public List<Interest> interests(@RequestParam String username, @RequestParam String id) {
 		return this.interestsService.getInterests(username, id);
 	}
 
@@ -105,6 +112,28 @@ public class MainController {
 	@DeleteMapping("user/interest/delete")
 	public void deleteInterest(@RequestParam String id) {
 		this.interestsService.deleteInterest(id);
+	}
+	
+	
+	// ******** profiles function ****************
+	@GetMapping("public/profile/profiles")
+	public List<Profile> profiles(@RequestParam String keyword) {
+		return this.profilesService.getProfiles(keyword);
+	}
+
+	@PostMapping("admin/profile/add")
+	public Profile addProfile(@RequestBody ProfileRequest profileRequest) {
+		return this.profilesService.addProfile(profileRequest);
+	}
+
+	@PutMapping("admin/profile/edit")
+	public Profile editProfile(@RequestParam Long id, @RequestBody ProfileRequest profileRequest) {
+		return this.profilesService.editProfile(id, profileRequest);
+	}
+
+	@DeleteMapping("admin/profile/delete")
+	public void deleteProfile(@RequestParam Long id) {
+		this.profilesService.deleteProfile(id);
 	}
 
 }

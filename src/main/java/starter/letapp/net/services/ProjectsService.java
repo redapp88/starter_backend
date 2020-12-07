@@ -10,5 +10,6 @@ public Project addProject(ProjectRequest projectRequest);
 public void deleteProject(Long id);
 public Project editProject(Long id,ProjectRequest projectRequest);
 public Project getProject(Long id);
-public List<Project> getProjects(String username, String contry, String city,String categorie, String keyword,String state);
+public List<Project> getProjects(String username, String city,String categorie, String keyword,String state,boolean compatibles,String searcher);
+public Project save(Project project);
 }

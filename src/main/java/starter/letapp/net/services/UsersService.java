@@ -2,9 +2,11 @@ package starter.letapp.net.services;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 import starter.letapp.net.entities.AppUser;
-import starter.letapp.net.entities.PasswordRequest;
 import starter.letapp.net.entities.Profile;
+import starter.letapp.net.technicals.PasswordRequest;
 import starter.letapp.net.technicals.UserRequest;
 
 
@@ -16,8 +18,8 @@ public interface UsersService {
 	public void editPassword(String username, PasswordRequest passwordRequest);
 	public void resetPassword(String username,String password);
 	public String confirmeResetPassword(Long id);
-	public List<AppUser> getUsers(String keyword,String contry,String city,
-			List<Profile> profiles, String state);
+	public List<AppUser> getUsers(String keyword,String city,List<Profile> profiles, String state);
+	public AppUser save(AppUser user);
 
 }
 

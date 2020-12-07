@@ -55,8 +55,8 @@ private AuthenticationManager authenticationManager;
 				.claim("roles", springUser.getAuthorities())
 				.claim("experition", SecurityConstants.EXPIRATION_TIME)
 				.claim("name", springUser.getName())
-				.claim("contry", springUser.getContry())
 				.claim("city", springUser.getCity())
+				.claim("profiles", springUser.getProfiles())
 				.compact();
 		response.addHeader(SecurityConstants.HEADER_STRING,
 				SecurityConstants.TOKEN_PREFIX+jwtToken);

@@ -1,15 +1,20 @@
 package starter.letapp.net.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,7 +27,7 @@ import lombok.NonNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppUser {
+public class AppUser implements Serializable {
 @Id
 private String username;
 @NonNull
@@ -37,24 +42,23 @@ private String mail;
 private String description;
 private String phone;
 @NonNull
-private String contry;
-@NonNull
 private String city;
 @NonNull
 private Date subsDate;
 @NonNull
 private String state;
 @OneToMany(mappedBy="owner")
-private List<Project> projects=new ArrayList<Project>();
-@ManyToMany
-private List<Profile> profiles=new ArrayList<Profile>();
+@JsonIgnore
+private List<Project> projects;
+@ManyToMany(fetch=FetchType.EAGER)
+private List<Profile> profiles;
 @OneToMany
-private List<Interest> interest=new ArrayList<Interest>();
+private List<Interest> interest;
 @JsonIgnore
 @ManyToOne
 private AppRole appRole;
-public AppUser(String username, @NonNull String password, @NonNull String name, @NonNull byte[] image, String mail,
-		@NonNull String description, String phone, @NonNull String contry,@NonNull String city) {
+public AppUser(String username, @NonNull String password, @NonNull String name, byte[] image, String mail,
+		@NonNull String description, String phone,@NonNull String city) {
 	super();
 	this.username = username;
 	this.password = password;
@@ -63,10 +67,14 @@ public AppUser(String username, @NonNull String password, @NonNull String name, 
 	this.mail = mail;
 	this.description = description;
 	this.phone = phone;
-	this.contry=contry;
 	this.city=city;
 	this.subsDate=new Date();
 	this.state="active";
+	this.profiles= new ArrayList<Profile>();
+	this.projects=new ArrayList<Project>();
+	this.interest=new ArrayList<Interest>();
+	
+	
 }
 
 
