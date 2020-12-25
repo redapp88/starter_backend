@@ -56,6 +56,7 @@ private AuthenticationManager authenticationManager;
 				.claim("experition", SecurityConstants.EXPIRATION_TIME)
 				.claim("name", springUser.getName())
 				.claim("city", springUser.getCity())
+				.claim("imageLoaded", springUser.isImageLoaded())
 				.claim("profiles", springUser.getProfiles())
 				.compact();
 		response.addHeader(SecurityConstants.HEADER_STRING,

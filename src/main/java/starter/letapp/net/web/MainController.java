@@ -20,6 +20,7 @@ import starter.letapp.net.services.ProfilesService;
 import starter.letapp.net.services.ProjectsService;
 import starter.letapp.net.services.UsersService;
 import starter.letapp.net.technicals.InterestRequest;
+import starter.letapp.net.technicals.PasswordRequest;
 import starter.letapp.net.technicals.ProfileRequest;
 import starter.letapp.net.technicals.ProjectRequest;
 import starter.letapp.net.technicals.UserRequest;
@@ -28,7 +29,7 @@ import starter.letapp.net.technicals.UserRequest;
 public class MainController {
 
 	@Autowired
-	private UsersService UsersService;
+	private UsersService usersService;
 	@Autowired
 	private ProjectsService projectsService;
 	@Autowired
@@ -71,26 +72,35 @@ public class MainController {
 			@RequestParam String state, @RequestBody List<Profile> profiles) {
 		//System.out.println(profiles.length);
 		//return null;
-		return this.UsersService.getUsers(keyword, city, profiles, state);
+		return this.usersService.getUsers(keyword, city, profiles, state);
 	}
 
 	@GetMapping("user/user")
 	public AppUser user(@RequestParam String username) {
-		return this.UsersService.getUser(username);
+		return this.usersService.getUser(username);
 	}
 
 	@PostMapping("public/user/add")
 	public AppUser addUser(@RequestBody UserRequest userRequest) {
-		return this.UsersService.addUser(userRequest);
+		return this.usersService.addUser(userRequest);
 	}
 
 	@PutMapping("user/user/edit")
 	public AppUser editUser(@RequestParam String username, @RequestBody UserRequest userRequest) {
-		return this.UsersService.editUser(username, userRequest);
+	//System.out.println(userRequest);
+	//return null;
+	return this.usersService.editUser(username, userRequest);
 	}
 	@PutMapping("user/user/editPassword")
-	public AppUser editPassword(@RequestParam String username, @RequestBody UserRequest userRequest) {
-		return null;
+	public void editPassword(@RequestParam String username, @RequestBody PasswordRequest passwordRequest) {
+		 this.usersService.editPassword(username, passwordRequest);
+	}
+	@PutMapping("pubic/user/resetPassword")
+	public void resetPassword (
+	@RequestParam String username,
+	@RequestBody PasswordRequest passwordRequest)
+	{
+	 this.usersService.resetPassword(username,passwordRequest.getPassword());
 	}
 
 	// ******** interests function ****************

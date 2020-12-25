@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -34,9 +36,11 @@ private String username;
 private String password;
 @NonNull
 private String name;
-@NonNull
 @Lob
+@JsonIgnore
 private byte[] image;
+private boolean imageLoaded;
+@Column(unique = true)
 private String mail;
 @NonNull
 private String description;
@@ -57,8 +61,8 @@ private List<Interest> interest;
 @JsonIgnore
 @ManyToOne
 private AppRole appRole;
-public AppUser(String username, @NonNull String password, @NonNull String name, byte[] image, String mail,
-		@NonNull String description, String phone,@NonNull String city) {
+public AppUser(String username, @NonNull String password, @NonNull String name,  byte[] image, String mail,
+		@NonNull String description, String phone,@NonNull String city,List<Profile> profiles) {
 	super();
 	this.username = username;
 	this.password = password;
@@ -69,10 +73,17 @@ public AppUser(String username, @NonNull String password, @NonNull String name, 
 	this.phone = phone;
 	this.city=city;
 	this.subsDate=new Date();
-	this.state="active";
-	this.profiles= new ArrayList<Profile>();
+	this.state="DISABLED";
+	this.profiles= profiles;
 	this.projects=new ArrayList<Project>();
 	this.interest=new ArrayList<Interest>();
+	if(image !=null) 
+		this.imageLoaded=true;
+	
+	else
+		this.imageLoaded=false;
+		
+	
 	
 	
 }

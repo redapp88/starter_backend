@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ private String categorie;
 private Date creationDate;
 @ManyToMany
 private List<Profile> profiles=new ArrayList<Profile>();
-@OneToMany
+@OneToMany(cascade = CascadeType.ALL)
 private List<Interest> interests=new ArrayList<Interest>();
 @ManyToOne
 @NonNull

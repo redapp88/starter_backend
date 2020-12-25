@@ -3,6 +3,7 @@ package starter.letapp.net.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Interest implements Serializable {
 	@ManyToOne
 	private AppUser user;
 	@NonNull
-	@ManyToOne
+	@ManyToOne()
 	private Project project;
 	private String message;
 	@NonNull

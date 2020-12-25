@@ -20,6 +20,7 @@ public interface UsersService {
 	public String confirmeResetPassword(Long id);
 	public List<AppUser> getUsers(String keyword,String city,List<Profile> profiles, String state);
 	public AppUser save(AppUser user);
+	public String confirmeAccount(Long id);
 
 }
 

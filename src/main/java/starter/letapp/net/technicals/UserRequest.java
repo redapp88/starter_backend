@@ -1,5 +1,5 @@
 package starter.letapp.net.technicals;
-
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +29,7 @@ public class UserRequest {
 	private String description;
 	private String phone;
 	private String city;
+	//private Blob image;
 	private List<Project> projects;
 	private List<Profile> profiles;
 }

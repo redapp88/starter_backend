@@ -36,7 +36,7 @@ private UsersService usersService;
 	    ExtendedUser user=new ExtendedUser(appUser.getUsername(),
 	    		appUser.getPassword(),
 	    		appUser.getName(),
-	    		appUser.getImage(),
+	    		appUser.isImageLoaded(),
 	    		appUser.getCity(),
 	    		appUser.getProfiles(),
 	    		authorities);

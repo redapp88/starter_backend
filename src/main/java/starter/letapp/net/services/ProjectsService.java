@@ -12,4 +12,5 @@ public Project editProject(Long id,ProjectRequest projectRequest);
 public Project getProject(Long id);
 public List<Project> getProjects(String username, String city,String categorie, String keyword,String state,boolean compatibles,String searcher);
 public Project save(Project project);
+void verifyMaxProject(String username);
 }
